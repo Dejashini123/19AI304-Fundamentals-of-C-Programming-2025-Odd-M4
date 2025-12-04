@@ -212,38 +212,48 @@ Thus, the program was implemented and executed successfully, and the required ou
  Stop
 # Program:
 ```
-#include<stdio.h>
+#include <stdio.h>
 
-float celtof(){
+float celtof();
+float ftocel();
+
+int main()
+{
+    float f, c;
+
+    f = celtof();     // Celsius to Fahrenheit
+    printf("Fahrenheit value = %.2f\n", f);
+
+    c = ftocel();     // Fahrenheit to Celsius
+    printf("Celsius value = %.2f\n", c);
+
+    return 0;
+}
+
+float celtof()
+{
     float C, F;
     printf("Enter the temperature in Celsius: ");
     scanf("%f", &C);
+
     F = (C * 9 / 5) + 32;
     return F;
 }
 
-float ftocel(){
+float ftocel()
+{
     float f, celsius;
     printf("Enter the temperature in Fahrenheit: ");
     scanf("%f", &f);
+
     celsius = (f - 32) * 5 / 9;
     return celsius;
 }
 
-int main(){
-    float F, C;
-
-    F = celtof();
-    printf("Temperature in Fahrenheit: %.2f\n", F);
-
-    C = ftocel();
-    printf("Temperature in Celsius: %.2f\n", C);
-
-    return 0;
-}
 ```
 # Output:
-<img width="546" height="319" alt="image" src="https://github.com/user-attachments/assets/5a36105d-0cf4-4d3c-9857-5a212dee2d72" />
+<img width="818" height="422" alt="image" src="https://github.com/user-attachments/assets/029e1421-58e9-430c-abbd-2bc262d7e4fd" />
+
 
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
@@ -293,52 +303,65 @@ Thus, the program was implemented and executed successfully, and the required ou
   Stop
 # Program:
 ```
-#include<stdio.h>
+#include <stdio.h>
+
 #define R 4
 #define C 4
 
-void spiralPrint(int m, int n, int a[R][C]){
-    int k = 0, l = 0, i;
+void spiralPrint(int m, int n, int a[R][C])
+{
+    int k = 0;  // starting row index
+    int l = 0;  // starting column index
 
-    while(k < m && l < n){
-        for(i = l; i < n; i++)
+    while (k < m && l < n)
+    {
+        // Print top row
+        for (int i = l; i < n; i++)
             printf("%d ", a[k][i]);
         k++;
 
-        for(i = k; i < m; i++)
-            printf("%d ", a[i][n-1]);
+        // Print last column
+        for (int i = k; i < m; i++)
+            printf("%d ", a[i][n - 1]);
         n--;
 
-        if(k < m){
-            for(i = n-1; i >= l; i--)
-                printf("%d ", a[m-1][i]);
+        // Print bottom row if any
+        if (k < m)
+        {
+            for (int i = n - 1; i >= l; i--)
+                printf("%d ", a[m - 1][i]);
             m--;
         }
 
-        if(l < n){
-            for(i = m-1; i >= k; i--)
+        // Print first column if any
+        if (l < n)
+        {
+            for (int i = m - 1; i >= k; i--)
                 printf("%d ", a[i][l]);
             l++;
         }
     }
-    printf("\n");
 }
 
-int main(){
+int main()
+{
     int a[R][C] = {
-        {1, 2, 3, 4},
-        {5, 6, 7, 8},
-        {9, 10, 11, 12},
+        {1,  2,  3,  4},
+        {5,  6,  7,  8},
+        {9,  10, 11, 12},
         {13, 14, 15, 16}
     };
 
+    printf("Spiral order: ");
     spiralPrint(R, C, a);
 
     return 0;
 }
+
 ```
 # Output:
-<img width="674" height="456" alt="image" src="https://github.com/user-attachments/assets/b7f74de2-b842-4839-8468-698c99d1deb3" />
+<img width="815" height="311" alt="image" src="https://github.com/user-attachments/assets/2c575636-3931-4a6c-be04-6187667ba7c3" />
+
 
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
@@ -375,36 +398,52 @@ To build a C program to convert a string as described above, using a user-define
  Stop
 # Program:
 ```
-#include<stdio.h>
-#include<ctype.h>
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
-void convertFirstCLastC(char str[]){
+void convertFirstCLastC(char str[])
+{
     int len = strlen(str);
-    if(len == 0) return;
 
+    // Convert first character to uppercase
     str[0] = toupper(str[0]);
-    for(int i = 1; i < len - 1; i++){
-        if(str[i] == ' '){
-            str[i-1] = toupper(str[i-1]);
-            str[i+1] = toupper(str[i+1]);
+
+    // Convert characters before and after space
+    for (int i = 1; i < len - 1; i++)
+    {
+        if (str[i] == ' ')
+        {
+            str[i - 1] = toupper(str[i - 1]);  // before space
+            str[i + 1] = toupper(str[i + 1]);  // after space
         }
     }
-    str[len-1] = toupper(str[len-1]);
+
+    // Convert last character to uppercase
+    str[len - 1] = toupper(str[len - 1]);
 }
 
-int main(){
+int main()
+{
     char str[100];
-    scanf("%[^\n]s", str);
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    // Remove newline if present
+    str[strcspn(str, "\n")] = '\0';
 
     convertFirstCLastC(str);
 
-    printf("%s\n", str);
+    printf("Modified string: %s", str);
+
     return 0;
 }
+
 ```
 # Output:
-<img width="674" height="456" alt="image" src="https://github.com/user-attachments/assets/6c1f6256-e174-4514-a765-ed1736dce663" />
+<img width="815" height="307" alt="image" src="https://github.com/user-attachments/assets/e8c0d361-4d5f-4f6a-9efa-ff0503755445" />
+
 
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
